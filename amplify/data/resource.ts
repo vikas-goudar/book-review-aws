@@ -7,7 +7,10 @@ const schema = a.schema({
       description: a.string(),
       image: a.string(),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [
+      allow.authenticated().to(['read']),
+      allow.owner()
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
