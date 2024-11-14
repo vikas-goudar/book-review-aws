@@ -66,8 +66,9 @@ export default function App() {
       name: form.get("name"),
       description: form.get("description"),
       rating: form.get("rating"),
+      
     });
-
+    console.log();
     console.log(newNote);
     /*
     if (newNote.image)

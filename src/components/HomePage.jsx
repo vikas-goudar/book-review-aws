@@ -12,20 +12,17 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4">
-      <h1 className="text-5xl font-bold mb-8 text-gray-800">Book Review Site</h1>
-      <form onSubmit={handleSubmit} className="flex mb-6">
+    <div className="home-container">
+      <h1 className="home-title">Book Review Site</h1>
+      <form onSubmit={handleSubmit} className="home-search-form">
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search for books..."
-          className="w-80 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="home-search-input"
         />
-        <button
-          type="submit"
-          className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-r-md hover:bg-blue-700 transition-colors"
-        >
+        <button type="submit" className="home-search-button">
           Search
         </button>
       </form>

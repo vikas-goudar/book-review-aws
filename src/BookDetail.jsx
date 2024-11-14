@@ -20,6 +20,12 @@ export default function BookDetail() {
   const client = generateClient({
     authMode: "userPool",
   });
+
+  function stripHTML(html) {
+  const tempDivElement = document.createElement('div');
+  tempDivElement.innerHTML = html;
+  return tempDivElement.textContent || tempDivElement.innerText || '';
+}
   
 
   async function fetchNotes() {
@@ -67,7 +73,9 @@ export default function BookDetail() {
           authors: volumeInfo.authors || ['Unknown Author'],
           publisher: volumeInfo.publisher || 'Unknown Publisher',
           published_date: volumeInfo.publishedDate || 'Unknown Date',
-          description: volumeInfo.description || 'No description available.',
+          description: volumeInfo.description
+          ? stripHTML(volumeInfo.description)
+          : 'No description available.',
           page_count: volumeInfo.pageCount || 'Unknown Page Count',
           categories: volumeInfo.categories || ['No categories available'],
           average_rating: volumeInfo.averageRating || 'No rating',
@@ -156,108 +164,99 @@ export default function BookDetail() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto mt-10 flex">
-        <div className="w-1/3">
+      <div className="book-detail-container">
+        <div className="book-image-container">
           <img
             src={
               book.thumbnail ||
               'https://via.placeholder.com/128x192?text=No+Image'
             }
             alt={book.title}
-            className="w-full h-auto object-contain"
+            className="book-image"
           />
         </div>
-        <div className="w-2/3 pl-10">
-          <h1 className="text-4xl font-bold">
-            {book.title || 'No Title Available'}
-          </h1>
-          <p className="text-2xl mt-4">
-            By{' '}
-            {book.authors ? book.authors.join(', ') : 'Unknown Author'}
+        <div className="book-content-container">
+          <h1 className="book-title">{book.title || 'No Title Available'}</h1>
+          <p className="book-author">
+            By {book.authors ? book.authors.join(', ') : 'Unknown Author'}
           </p>
-          <p className="text-lg mt-2">
+          <p className="book-published">
             Published: {book.published_date || 'Unknown'}
           </p>
-          <p className="text-base mt-6">
+          <p className="book-description">
             {book.description || 'No description available.'}
           </p>
-          <p className="text-base mt-6">
-            Page Count: {book.page_count || 'Unknown'}
-          </p>
-          <p className="text-base mt-6">
-            Average Rating: {book.average_rating || 'No rating.'}
-          </p>
-          <p className="text-base mt-6">
-            Ratings Count: {book.ratings_count || 'No ratings count.'}
-          </p>
-          <p className="text-base mt-6">
-            Categories:{' '}
-            {book.categories ? book.categories.join(', ') : 'No categories.'}
-          </p>
-
-          {/* Action Buttons */}
-          <div className="flex justify-between mt-10">
-            <button className="px-4 py-2 bg-gray-500 text-white rounded">
-              Like
-            </button>
+          {/* ... Other book details ... */}
+          <div className="action-buttons-container">
+            <button className="action-button">Like</button>
             <button
-              className="px-4 py-2 bg-blue-500 text-white rounded"
+              className="write-review-button"
               onClick={() => setShowReviewPopup(true)}
             >
               Write a Review
             </button>
-            <button className="px-4 py-2 bg-gray-500 text-white rounded">
-              Add to Watchlist
-            </button>
+            <button className="action-button">Add to Watchlist</button>
           </div>
         </div>
       </div>
-      
-      <div>
-        <h2 className="text-2xl font-semibold mt-10 mb-4">Reviews:</h2>
+
+      <div className="reviews-container">
+        <h2 className="reviews-title">Reviews:</h2>
+        <div className="reviews-scrollable-container">
         {notes.length > 0 ? (
             notes
-                .filter((note) => note.name === book.title)
-                .map((note) => (
-                <div key={note.id} className="border-b border-gray-300 py-4">
-                    <h3 className="text-xl font-bold">{note.name}</h3>
-                    <p>{note.description}</p>
-                    <p>Rating: {note.rating}</p>    
-                </div>
-                ))
-            ) : (
-            <p>No reviews yet.</p>
-            )}
-
+            .filter((note) => note.name === book.title)
+            .map((note) => (
+            <div key={note.id} className="review-item">
+              <h3 className="reviewer-name">{note.name}</h3>
+              <p className="review-text">{note.description}</p>
+              <p className="review-rating">Rating: {note.rating}</p>
+            </div>
+          ))
+        ) : (
+          <p>No reviews yet.</p>
+        )}
       </div>
-      {/* Review Popup */}
+      </div>
+
       {showReviewPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-6 rounded-md relative w-1/2">
+        <div className="review-popup-overlay">
+          <div className="review-popup-content">
             <button
-              className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+              className="close-button"
               onClick={() => setShowReviewPopup(false)}
             >
               X
             </button>
-            <h2 className="text-xl font-semibold mb-4">Write a Review</h2>
+            <h2 className="popup-title">Write a Review</h2>
             <form onSubmit={createNote}>
-              <div className="mb-4">
-                
-                <textarea name="description"
-                  className="w-full p-2 border border-gray-300 rounded"
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="name"
+                  className="form-input"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="Your Name"
+                  required
+                />
+                <textarea
+                  name="description"
+                  className="form-textarea"
                   rows="5"
                   placeholder="Write your review here..."
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
+                  required
                 ></textarea>
               </div>
-              <div className="mb-4" name="rating">
-                <label className="mr-2">Rating:</label>
+              <div className="form-group">
+                <label className="form-label">Rating:</label>
                 <select
                   value={rating}
                   onChange={(e) => setRating(e.target.value)}
-                  className="border border-gray-300 rounded p-1"
+                  className="form-select"
+                  required
                 >
                   {['1', '2', '3', '4', '5'].map((num) => (
                     <option key={num} value={num}>
@@ -266,11 +265,8 @@ export default function BookDetail() {
                   ))}
                 </select>
               </div>
-              <div className="text-right">
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-                >
+              <div className="form-actions">
+                <button type="submit" className="submit-review-button">
                   Submit Review
                 </button>
               </div>

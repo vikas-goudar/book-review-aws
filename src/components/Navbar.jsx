@@ -36,14 +36,14 @@ function Navbar(){
 
 
 const Navbar = () => {
-  return (
-    <nav className="bg-gray-800 p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-white font-bold">Book Review Site</div>
-      </div>
-    </nav>
-  );
-};
-
-export default Navbar;
+    return (
+        <nav className="navbar">
+          <div className="navbar-container">
+            <div className="navbar-title">Book Review Site</div>
+          </div>
+        </nav>
+      );
+    };
+    
+    export default Navbar;
 

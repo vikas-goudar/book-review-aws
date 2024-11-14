@@ -1,3 +1,374 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* MainPage.css */
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.search-form-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 20rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #D1D5DB;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+
+.search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3B82F6;
+}
+
+.search-button {
+  padding: 0.5rem 1.5rem;
+  background-color: #3B82F6;
+  color: white;
+  font-weight: 600;
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-button:hover {
+  background-color: #1D4ED8;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 2.5rem 5rem;
+}
+
+@media (min-width: 640px) {
+  .book-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .book-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .book-grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+.no-books {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: #6B7280;
+}
+
+
+/* BookDetail.css */
+
+.book-detail-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 2.5rem auto 0;
+}
+
+.book-image-container {
+  width: 33.3333%;
+}
+
+.book-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.book-content-container {
+  width: 66.6667%;
+  padding-left: 2.5rem;
+}
+
+.book-title {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+  font-weight: bold;
+}
+
+.book-author,
+.book-published,
+.book-description,
+.book-details {
+  font-size: 1rem;
+  line-height: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.action-buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+}
+
+.action-button,
+.write-review-button {
+  padding: 0.5rem 1rem;
+  color: white;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+}
+
+.action-button {
+  background-color: #6B7280;
+}
+
+.write-review-button {
+  background-color: #3B82F6;
+}
+
+.reviews-container {
+  max-width: 800px;
+  margin: 2.5rem auto;
+}
+
+.reviews-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.review-item {
+  border-bottom: 1px solid #D1D5DB;
+  padding: 1rem 0;
+}
+
+.reviewer-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.review-text,
+.review-rating {
+  margin-top: 0.5rem;
+}
+
+.review-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review-popup-content {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 0.375rem;
+  position: relative;
+  width: 50%;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: #6B7280;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.popup-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #D1D5DB;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.form-label {
+  margin-right: 0.5rem;
+}
+
+.form-actions {
+  text-align: right;
+}
+
+.submit-review-button {
+  padding: 0.5rem 1rem;
+  background-color: #10B981;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.submit-review-button:hover {
+  background-color: #059669;
+}
+
+
+
+/* Card.css */
+
+.card-container {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+  overflow: hidden;
+  width: 9rem;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+.card-image {
+  width: 8rem;
+  height: 12rem;
+  margin: 0 auto;
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.card-content {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.card-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.card-authors {
+  font-size: 0.75rem;
+  color: #4B5563;
+  margin-top: 0.25rem;
+}
+
+
+
+/* HomePage.css */
+
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #F3F4F6;
+  padding: 1rem;
+}
+
+.home-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #1F2937;
+}
+
+.home-search-form {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.home-search-input {
+  width: 20rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #D1D5DB;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+}
+
+.home-search-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #3B82F6;
+}
+
+.home-search-button {
+  padding: 0.5rem 1.5rem;
+  background-color: #3B82F6;
+  color: white;
+  font-weight: 600;
+  border-top-right-radius: 0.375rem;
+  border-bottom-right-radius: 0.375rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.home-search-button:hover {
+  background-color: #1D4ED8;
+}
+
+
+
+/* Navbar.css */
+
+.navbar {
+  background-color: #1F2937;
+  padding: 1rem;
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.navbar-title {
+  color: white;
+  font-weight: bold;
+}
+
+
+
+
+/* index.css */
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+button {
+  font-family: inherit;
+}
+
+
+/* Scrollable Container */
+.reviews-scrollable-container {
+  max-height: 400px; /* Adjust this value as needed */
+  overflow-y: auto;
+}

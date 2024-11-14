@@ -94,25 +94,22 @@ export default function MainPage() {
   return (
     <>
       <Navbar />
-      <form onSubmit={handleSubmit} className="flex justify-center mt-6">
-        <div className="flex items-center">
+      <form onSubmit={handleSubmit} className="search-form">
+        <div className="search-form-container">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search for books..."
-            className="w-80 px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="search-input"
           />
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-r-md hover:bg-blue-700 transition-colors"
-          >
+          <button type="submit" className="search-button">
             Search
           </button>
         </div>
       </form>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4 mx-20 my-10">
+      <div className="book-grid">
         {books.length > 0 ? (
           books.map((book) => (
             <Card
@@ -128,9 +125,7 @@ export default function MainPage() {
             />
           ))
         ) : (
-          <div className="col-span-full text-center text-gray-500">
-            No books found.
-          </div>
+          <div className="no-books">No books found.</div>
         )}
       </div>
     </>
