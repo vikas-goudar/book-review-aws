@@ -11,12 +11,16 @@ import {
   Grid,
   Divider,
 } from "@aws-amplify/ui-react";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Amplify } from "aws-amplify";
 import "@aws-amplify/ui-react/styles.css";
 import { getUrl } from "aws-amplify/storage";
 import { uploadData } from "aws-amplify/storage";
 import { generateClient } from "aws-amplify/data";
 import outputs from "../amplify_outputs.json";
+import HomePage from './components/HomePage'
+import MainPage from './MainPage'
+import BookDetail from './BookDetail'
 /**
  * @type {import('aws-amplify/data').Client<import('../amplify/data/resource').Schema>}
  */
@@ -37,6 +41,7 @@ export default function App() {
     const { data: notes } = await client.models.Note.list();
     await Promise.all(
       notes.map(async (note) => {
+        /*
         if (note.image) {
           const linkToStorageFile = await getUrl({
             path: ({ identityId }) => `media/${identityId}/${note.image}`,
@@ -44,6 +49,7 @@ export default function App() {
           console.log(linkToStorageFile.url);
           note.image = linkToStorageFile.url;
         }
+        */
         return note;
       })
     );
@@ -54,15 +60,16 @@ export default function App() {
   async function createNote(event) {
     event.preventDefault();
     const form = new FormData(event.target);
-    console.log(form.get("image").name);
+    //console.log(form.get("image").name);
 
     const { data: newNote } = await client.models.Note.create({
       name: form.get("name"),
       description: form.get("description"),
-      image: form.get("image").name,
+      rating: form.get("rating"),
     });
 
     console.log(newNote);
+    /*
     if (newNote.image)
       if (newNote.image)
         await uploadData({
@@ -70,6 +77,7 @@ export default function App() {
 
           data: form.get("image"),
         }).result;
+        */
 
     fetchNotes();
     event.target.reset();
@@ -91,6 +99,24 @@ export default function App() {
   return (
     <Authenticator>
       {({ signOut }) => (
+        <>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/home" element={<MainPage />} />
+            <Route path="/book/:id" element={<BookDetail />} />
+          </Routes>
+          <button onClick={signOut}>Sign Out</button>
+        </>
+      )}
+    </Authenticator>
+  );
+}
+
+/*
+<Routes>
+            
+/*
+{({ signOut }) => (
         <Flex
           className="App"
           justifyContent="center"
@@ -180,6 +206,4 @@ export default function App() {
           <Button onClick={signOut}>Sign Out</Button>
         </Flex>
       )}
-    </Authenticator>
-  );
-}
+*/

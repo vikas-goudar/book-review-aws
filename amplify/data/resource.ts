@@ -5,7 +5,7 @@ const schema = a.schema({
     .model({
       name:a.string(),
       description: a.string(),
-      image: a.string(),
+      rating: a.string(),
     })
     .authorization((allow) => [
       allow.authenticated().to(['read']),
